@@ -10,10 +10,11 @@ app.use(bodyParser.json());
 
 
 const connection = mysql.createConnection({
-    host: 'sql106.ezyro.com',
-    user: 'ezyro_25920703',
-    password: 'beer4567',
-    database: 'ezyro_25920703_way2go',
+    host: 'localhost',
+    user: 'root',
+    password: 'beer1ben',
+    database: 'way2go',
+    port: 3306
 });
 
 connection.connect(function (error) {
