@@ -8,16 +8,28 @@ app.use(express.static("public"));
 app.use(cors());
 app.use(bodyParser.json());
 
+const { Client } = require('pg');
 
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'beer1ben',
-    database: 'way2go',
-    port: 3306
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
-connection.connect(function (error) {
+client.connect();
+
+
+// const connection = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'beer1ben',
+//     database: 'way2go',
+//     port: 3306
+// });
+
+// connection
+client.connect(function (error) {
     if (!!error) {
         console.log('error in mysql connection');
     } else {
@@ -37,7 +49,8 @@ app.post('/', (req, res) => {
     console.log(body.data.title)
     console.dir('--------')
 
-    connection.query(`SELECT * 
+    // connection
+    client.query(`SELECT * 
                         FROM ${body.data.title}
                         WHERE name= '${body.data.name}'`, (err, results) => {
 
